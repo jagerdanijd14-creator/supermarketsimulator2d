@@ -25,7 +25,7 @@
             overflow: hidden;
         }
 
-        /* Mobil nézet konténer - Rugalmasan illeszkedik a képernyőhöz */
+        /* Mobil nézet konténer */
         .app-container {
             width: 100%;
             max-width: 450px;
@@ -204,7 +204,7 @@
             padding: 15px;
         }
 
-        /* Fejléc a főmenüben logóval és szerkesztő gombbal */
+        /* Fejléc */
         .header {
             position: relative;
             z-index: 10;
@@ -216,7 +216,7 @@
             align-items: center;
             flex-shrink: 0;
             width: 100%;
-            pointer-events: none; /* Hogy a háttér ne zavarjon, de a gombok kapjanak kattintást */
+            pointer-events: none;
         }
 
         .header > * {
@@ -273,7 +273,7 @@
             margin-top: 1px;
         }
 
-        /* Menü Nézetek - Középre igazítva */
+        /* Menü Nézetek */
         .view-panel {
             position: relative;
             z-index: 3;
@@ -319,7 +319,7 @@
             transform: translateY(-1px);
         }
 
-        /* Terhelés / Slotok Nézet */
+        /* Slotok Nézet */
         .slots-container {
             width: 100%;
             max-height: 280px;
@@ -397,7 +397,105 @@
             color: #fff;
         }
 
-        /* Beállítások és Adatbázis Szerkesztő Nézet */
+        /* Kártyás Adatbázis & Webshop Nézet Stílusok */
+        .cards-container {
+            width: 100%;
+            max-height: 260px;
+            overflow-y: auto;
+            padding-right: 2px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 6px;
+        }
+
+        .cards-container::-webkit-scrollbar {
+            width: 3px;
+        }
+        .cards-container::-webkit-scrollbar-thumb {
+            background: #00e699;
+            border-radius: 3px;
+        }
+
+        .product-card {
+            background: rgba(22, 27, 34, 0.95);
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .product-card:hover {
+            border-color: #00e699;
+            background: rgba(33, 38, 45, 0.95);
+        }
+
+        .product-card-img {
+            width: 42px;
+            height: 42px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #444;
+        }
+
+        .product-card-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .product-card-title {
+            font-size: 10px;
+            font-weight: 800;
+            color: #00e699;
+        }
+
+        .product-card-sub {
+            font-size: 9px;
+            color: #8b949e;
+        }
+
+        /* Kosár Vezérlő Gombok (+ / - / Törlés) */
+        .cart-controls {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .btn-qty {
+            background: #21262d;
+            border: 1px solid #30363d;
+            color: #fff;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            font-size: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-qty:hover {
+            background: #30363d;
+            border-color: #00e699;
+        }
+
+        .cart-qty-text {
+            font-size: 10px;
+            font-weight: bold;
+            color: #f0f6fc;
+            width: 18px;
+            text-align: center;
+        }
+
         .settings-container {
             width: 100%;
             max-height: 280px;
@@ -723,7 +821,7 @@
             font-weight: 600;
         }
 
-        /* Windows Ablak (Nyitvatartás & Webshop) */
+        /* Windows Ablak */
         .win-window {
             position: absolute;
             top: 50%;
@@ -780,61 +878,6 @@
             overflow-y: auto;
         }
 
-        /* Webshop Termék Kártya */
-        .shop-product-card {
-            background: #252526;
-            border: 1px solid #333;
-            border-radius: 6px;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 4px;
-        }
-
-        .shop-product-img {
-            width: 45px;
-            height: 45px;
-            object-fit: cover;
-            border-radius: 4px;
-            border: 1px solid #444;
-        }
-
-        .shop-product-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .shop-product-name {
-            font-size: 10px;
-            font-weight: 700;
-            color: #00e699;
-        }
-
-        .shop-product-price {
-            font-size: 9px;
-            color: #8b949e;
-        }
-
-        .shop-order-controls {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .shop-qty-input {
-            width: 40px;
-            background: #1e1e1e;
-            border: 1px solid #444;
-            color: #fff;
-            text-align: center;
-            padding: 3px;
-            border-radius: 4px;
-            font-size: 10px;
-        }
-
         .opening-hours-row {
             display: flex;
             justify-content: space-between;
@@ -867,7 +910,7 @@
             font-size: 10px;
         }
 
-        /* Windows Tálca (Taskbar) */
+        /* Windows Tálca */
         .windows-taskbar {
             height: 32px;
             background: rgba(20, 20, 20, 0.85);
@@ -1054,8 +1097,6 @@
             
             <div class="store-map-viewport" id="mapViewport">
                 <div class="store-grid-30x40" id="storeGridContainer" onclick="handleMapClick(event)">
-                    <!-- Rácscellák -->
-                    
                     <!-- Számítógép asztal -->
                     <div class="furniture-pc" id="pcFurniture" style="left: 160px; top: 160px;" 
                          onclick="openPcDesktop(event)"
@@ -1086,7 +1127,7 @@
                 </div>
             </div>
 
-            <!-- Nyitvatartás Alkalmazás Ablak -->
+            <!-- Nyitvatartás Ablak -->
             <div id="opening-hours-window" class="win-window hidden">
                 <div class="win-window-header">
                     <div class="win-window-title">🕒 Bolt Nyitvatartás Beállítása</div>
@@ -1094,23 +1135,19 @@
                 </div>
                 <div class="win-window-body">
                     <button class="btn-action btn-save" onclick="setAll024()" style="font-size: 9px; padding: 3px;">Minden nap 0-24 óra beállítása</button>
-                    
-                    <div id="opening-days-container" style="display: flex; flex-direction: column; gap: 3px; overflow-y: auto; max-height: 200px;">
-                        <!-- Napok generálása JS-sel -->
-                    </div>
-
+                    <div id="opening-days-container" style="display: flex; flex-direction: column; gap: 3px; overflow-y: auto; max-height: 200px;"></div>
                     <button class="btn-action btn-save" onclick="saveOpeningHours()" style="padding: 4px; font-size: 9px;">Mentés</button>
                 </div>
             </div>
 
-            <!-- Webshop / Áruk Rendelése Ablak -->
+            <!-- Webshop / Rendelés Ablak (Kártyás) -->
             <div id="webshop-window" class="win-window hidden">
-                <div class="win-window-header">
-                    <div class="win-window-title">🛒 Nagyker Webshop (Árurendelés)</div>
+                <div class="win-window-header" id="webshop-header-title">
+                    <div class="win-window-title">🛒 Nagyker Webshop (Kattints a kártyára)</div>
                     <button class="win-close-btn" onclick="closeWebshopApp()">✕</button>
                 </div>
-                <div class="win-window-body" id="webshop-products-container">
-                    <!-- Termékek dinamikusan generálva az adatbázisból -->
+                <div class="win-window-body" id="webshop-body">
+                    <!-- Dinamikusan kártyás nézet vagy kosár nézet -->
                 </div>
             </div>
 
@@ -1156,11 +1193,11 @@
         <div id="toast" class="toast">Értesítés</div>
         <div class="bg-grid"></div>
 
-        <!-- FŐMENÜ ÚJ HÁTTÉRKÉP & OVERLAY -->
+        <!-- FŐMENÜ HÁTTÉRKÉP & OVERLAY -->
         <img src="https://www.dropbox.com/scl/fi/4ianmmd46w06ed6fzbesz/Supermarket.png?rlkey=5ih8i8dxtcnb19ja5jpss7grj&st=a53paco9&dl=1" alt="Main Menu BG" class="main-menu-bg" id="main-menu-bg-img">
         <div class="main-menu-overlay" id="main-menu-overlay"></div>
 
-        <!-- Fejléc (Logóval és Jobb Felső Adatbázis Gombbal) -->
+        <!-- Fejléc -->
         <div class="header" id="main-header">
             <button id="db-btn-main" class="db-edit-btn-top">🛠️ Adatbázis</button>
             <img src="https://www.dropbox.com/scl/fi/1vbaxptj4ispe8bqzwr3v/file_000000002bac8210941574a47bc1c76f-1.png?rlkey=n8lnw6w3qkjlpy8gmfakj3e4d&st=1nl6gdkn&dl=1" alt="Supermarket Logo" class="main-logo-img">
@@ -1168,9 +1205,8 @@
             <div class="subtitle" id="page-subtitle">FŐMENÜ</div>
         </div>
 
-        <!-- FŐMENÜ KÖZÉPRE IGAZÍTOTT TARTALOM (MINDEN ALMENÜVEL) -->
+        <!-- FŐMENÜ KÖZÉPRE IGAZÍTOTT TARTALOM -->
         <div class="menu-content-wrapper">
-            <!-- FŐMENÜ NÉZET -->
             <div id="main-menu" class="view-panel">
                 <button class="btn" onclick="openNewGameSlots()">
                     <span>Új játék</span>
@@ -1196,19 +1232,15 @@
 
             <!-- TERHELÉS / SLOTOK NÉZET -->
             <div id="load-menu" class="view-panel hidden">
-                <div class="slots-container" id="slots-list">
-                    <!-- Slotok -->
-                </div>
+                <div class="slots-container" id="slots-list"></div>
                 <div class="btn-group">
                     <button class="btn-action btn-back" onclick="closeLoadMenu()">Vissza</button>
                 </div>
             </div>
 
-            <!-- ADATBÁZIS SZERKESZTŐ NÉZET -->
+            <!-- ADATBÁZIS SZERKESZTŐ (Kártyás Nézet) -->
             <div id="database-menu" class="view-panel hidden">
-                <div class="settings-container" id="db-products-list">
-                    <!-- Termékek listája és szerkesztője -->
-                </div>
+                <div class="cards-container" id="db-cards-list"></div>
                 <div class="btn-group">
                     <button class="btn-action btn-save" onclick="addNewProductPrompt()">+ Új termék</button>
                     <button class="btn-action btn-back" onclick="closeDatabaseEditor()">Vissza</button>
@@ -1224,7 +1256,6 @@
                             <option value="hu">Magyar</option>
                         </select>
                     </div>
-
                     <div class="setting-group">
                         <div class="setting-label">
                             <span>Főhangerő</span>
@@ -1232,7 +1263,6 @@
                         </div>
                         <input type="range" id="slider-master" min="0" max="100" value="80" oninput="updateVal('val-master', this.value + '%')">
                     </div>
-
                     <div class="setting-group">
                         <div class="setting-label">
                             <span>Zene hangerő</span>
@@ -1240,7 +1270,6 @@
                         </div>
                         <input type="range" id="slider-music" min="0" max="100" value="60" oninput="updateVal('val-music', this.value + '%')">
                     </div>
-
                     <div class="setting-group">
                         <div class="setting-label">
                             <span>Hangeffekt hangerő</span>
@@ -1248,53 +1277,7 @@
                         </div>
                         <input type="range" id="slider-sfx" min="0" max="100" value="100" oninput="updateVal('val-sfx', this.value + '%')">
                     </div>
-
-                    <div class="setting-group">
-                        <label class="checkbox-row">
-                            <span class="setting-label">Bolti tolvajok</span>
-                            <input type="checkbox" id="chk-thieves" checked>
-                        </label>
-                    </div>
-
-                    <div class="setting-group">
-                        <label class="checkbox-row">
-                            <span class="setting-label">Online rendelés</span>
-                            <input type="checkbox" id="chk-online" checked>
-                        </label>
-                    </div>
-
-                    <div class="setting-group">
-                        <label class="checkbox-row">
-                            <span class="setting-label">Nagykereskedelmi ajánlat</span>
-                            <input type="checkbox" id="chk-wholesale" checked>
-                        </label>
-                    </div>
-
-                    <div class="setting-group">
-                        <label class="checkbox-row">
-                            <span class="setting-label">Rezgés</span>
-                            <input type="checkbox" id="chk-vibration" checked>
-                        </label>
-                    </div>
-
-                    <div class="setting-group">
-                        <label class="setting-label">Rezgés erőssége</label>
-                        <select id="select-vibe-power">
-                            <option value="10">10%</option>
-                            <option value="20">20%</option>
-                            <option value="30">30%</option>
-                            <option value="40">40%</option>
-                            <option value="50" selected>50%</option>
-                            <option value="60">60%</option>
-                            <option value="70">70%</option>
-                            <option value="80">80%</option>
-                            <option value="90">90%</option>
-                            <option value="100">100%</option>
-                        </select>
-                    </div>
                 </div>
-
-                <!-- Fixen látható alsó gombok -->
                 <div class="btn-group">
                     <button class="btn-action btn-save" onclick="saveSettings()">Mentés</button>
                     <button class="btn-action btn-back" onclick="closeSettings()">Vissza</button>
@@ -1302,7 +1285,6 @@
             </div>
         </div>
 
-        <!-- Lábléc -->
         <div class="footer" id="main-footer">
             <div class="dev-tag" data-source="Notebook sources">Jager Dev Studio</div>
             <div class="version-badge">v0.1.0 Alpha</div>
@@ -1324,12 +1306,16 @@
         let gameTimerInterval = null;
         let isGamePaused = false;
 
-        // Termék adatbázis (Alapértelmezetten a kért gabonapehellyel)
+        // Aktív kamion szállítmányok listája
+        let activeDeliveries = []; 
+
+        // Termék adatbázis & Kosár
         let productsDB = [
             { id: 1, name: "Gabonapehely (Doboz)", price: 120, stock: 0, image: "https://www.dropbox.com/scl/fi/xu3kvqlqr8l9fpu2zsas1/images.jpeg?rlkey=np8hpz64rs3o8np3y56rphl22&st=1tn9qnsr&dl=1" }
         ];
+        let cart = {}; // { productId: karton_mennyiség }
+        let webshopViewMode = 'shop'; // 'shop' vagy 'cart'
 
-        // Dropbox link átalakító függvény (dl=0 / dl=1 kezelés)
         function formatDropboxLink(url) {
             if (!url) return '';
             if (url.includes('dropbox.com')) {
@@ -1338,7 +1324,6 @@
             return url;
         }
 
-        // Nyitvatartás adatok és a hét napjai
         const dayNames = ["Csütörtök", "Péntek", "Szombat", "Vasárnap", "Hétfő", "Kedd", "Szerda"];
         let storeOpeningHours = {
             "Csütörtök": { open: "08:00", close: "20:00" },
@@ -1350,7 +1335,6 @@
             "Szerda": { open: "08:00", close: "20:00" }
         };
 
-        // Betöltés kezelés és timeout
         window.addEventListener('DOMContentLoaded', () => {
             const gridContainer = document.getElementById('storeGridContainer');
             for (let r = 1; r <= 40; r++) {
@@ -1364,7 +1348,6 @@
             loadProductsFromStorage();
             renderOpeningHoursRows();
 
-            // Biztosítjuk az Adatbázis gomb eseménykezelőjét
             const dbBtn = document.getElementById('db-btn-main');
             if (dbBtn) {
                 dbBtn.addEventListener('click', (e) => {
@@ -1420,7 +1403,7 @@
             }
         }
 
-        // --- ADATBÁZIS KEZELÉS (LocalStorage) ---
+        // --- KÁRTYÁS ADATBÁZIS SZERKESZTŐ ---
         function loadProductsFromStorage() {
             let savedDB = localStorage.getItem('supermarket_products_db');
             if (savedDB) {
@@ -1438,7 +1421,7 @@
             document.getElementById('main-menu').classList.add('hidden');
             document.getElementById('database-menu').classList.remove('hidden');
             document.getElementById('page-subtitle').innerText = 'ADATBÁZIS SZERKESZTŐ';
-            renderDatabaseEditor();
+            renderDatabaseCards();
         }
 
         function closeDatabaseEditor() {
@@ -1447,28 +1430,25 @@
             document.getElementById('page-subtitle').innerText = 'FŐMENÜ';
         }
 
-        function renderDatabaseEditor() {
-            const container = document.getElementById('db-products-list');
+        function renderDatabaseCards() {
+            const container = document.getElementById('db-cards-list');
             container.innerHTML = '';
 
-            productsDB.forEach((prod, index) => {
-                let group = document.createElement('div');
-                group.className = 'setting-group';
-                group.innerHTML = `
-                    <div class="setting-label">
-                        <span>Termék #${index + 1}</span>
+            productsDB.forEach((prod) => {
+                let card = document.createElement('div');
+                card.className = 'product-card';
+                card.innerHTML = `
+                    <img src="${prod.image}" alt="${prod.name}" class="product-card-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=100&auto=format&fit=crop'">
+                    <div class="product-card-info">
+                        <span class="product-card-title">${prod.name}</span>
+                        <span class="product-card-sub">Ár: ${prod.price} Ft | Raktáron: ${prod.stock} db</span>
+                    </div>
+                    <div style="display: flex; gap: 4px;">
+                        <button class="btn-qty" onclick="editProductPrompt(${prod.id})" title="Szerkesztés">✏️</button>
                         <button class="btn-slot-del" onclick="deleteProduct(${prod.id})">Törlés</button>
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 3px; margin-top: 4px;">
-                        <input type="text" id="db-name-${prod.id}" value="${prod.name}" placeholder="Termék neve">
-                        <div style="display: flex; gap: 5px;">
-                            <input type="number" id="db-price-${prod.id}" value="${prod.price}" placeholder="Ár (Ft)" style="width: 50%;">
-                        </div>
-                        <input type="text" id="db-img-${prod.id}" value="${prod.image}" placeholder="Dropbox Kép Link">
-                        <button class="btn-action btn-save" onclick="updateProduct(${prod.id})" style="padding: 3px; font-size: 9px; margin-top: 2px;">Módosítás mentése</button>
-                    </div>
                 `;
-                container.appendChild(group);
+                container.appendChild(card);
             });
         }
 
@@ -1488,31 +1468,36 @@
             });
 
             saveProductsToStorage();
-            renderDatabaseEditor();
+            renderDatabaseCards();
             showToast("Termék sikeresen hozzáadva!");
         }
 
-        function updateProduct(id) {
+        function editProductPrompt(id) {
             let prod = productsDB.find(p => p.id === id);
             if (!prod) return;
 
-            prod.name = document.getElementById(`db-name-${id}`).value;
-            prod.price = parseInt(document.getElementById(`db-price-${id}`).value) || prod.price;
-            prod.image = formatDropboxLink(document.getElementById(`db-img-${id}`).value);
+            let name = prompt("Termék új neve:", prod.name);
+            if (!name) return;
+            let price = parseInt(prompt("Termék új ára (Ft):", prod.price)) || prod.price;
+            let img = prompt("Új Dropbox kép link:", prod.image);
+
+            prod.name = name;
+            prod.price = price;
+            prod.image = formatDropboxLink(img);
 
             saveProductsToStorage();
-            renderDatabaseEditor();
+            renderDatabaseCards();
             showToast("Termék frissítve!");
         }
 
         function deleteProduct(id) {
             productsDB = productsDB.filter(p => p.id !== id);
             saveProductsToStorage();
-            renderDatabaseEditor();
+            renderDatabaseCards();
             showToast("Termék törölve!");
         }
 
-        // --- IDŐ ÉS ÓRA LOGIKA ---
+        // --- IDŐ ÉS IDŐKORLÁTOS RENDELÉS (06:00 - 12:00) ---
         function startGameTimer() {
             if (gameTimerInterval) clearInterval(gameTimerInterval);
             
@@ -1534,6 +1519,7 @@
                     }
                 }
 
+                checkDeliveries();
                 updateClockDisplay();
             }, 1000); 
         }
@@ -1585,7 +1571,28 @@
             }
         }
 
-        // --- SZÁMÍTÓGÉP ASZTAL ÉS WEBSHOP / NYITVATARTÁS APP ---
+        // --- KAMION KISZÁLLÍTÁS MECHANIKA (6 óra múlva érkezik) ---
+        function checkDeliveries() {
+            let currentTotalMins = (gameYear - 2026) * 525600 + (gameMonth - 1) * 43200 + (gameDay - 1) * 1440 + gameMinutes;
+            
+            activeDeliveries.forEach(del => {
+                if (!del.arrived && currentTotalMins >= del.arrivalTime) {
+                    del.arrived = true;
+                    // Hozzáadjuk a készlethez
+                    for (let pId in del.items) {
+                        let prod = productsDB.find(p => p.id == pId);
+                        if (prod) {
+                            prod.stock += del.items[pId];
+                        }
+                    }
+                    saveProductsToStorage();
+                    showToast(`🚛 Megérkezett a kamion az áruval!`);
+                }
+            });
+            activeDeliveries = activeDeliveries.filter(d => !d.arrived);
+        }
+
+        // --- WEBSHOP ÉS KOSÁR RENDSZER ---
         function openPcDesktop(e) {
             if (isEditorMode) return; 
             document.getElementById('pc-desktop-view').classList.remove('hidden');
@@ -1610,73 +1617,160 @@
         function openWebshopApp() {
             document.getElementById('opening-hours-window').classList.add('hidden');
             document.getElementById('webshop-window').classList.remove('hidden');
-            renderWebshopProducts();
+            webshopViewMode = 'shop';
+            renderWebshop();
         }
 
         function closeWebshopApp() {
             document.getElementById('webshop-window').classList.add('hidden');
         }
 
-        function renderWebshopProducts() {
-            const container = document.getElementById('webshop-products-container');
-            container.innerHTML = '';
+        function renderWebshop() {
+            const bodyContainer = document.getElementById('webshop-body');
+            bodyContainer.innerHTML = '';
 
-            if (productsDB.length === 0) {
-                container.innerHTML = '<div style="font-size: 9px; color: #8b949e; text-align: center; padding: 10px;">Nincs elérhető termék az adatbázisban. Add hozzá az Adatbázis szerkesztőben!</div>';
-                return;
-            }
+            let currentHour = Math.floor(gameMinutes / 60);
 
-            productsDB.forEach(prod => {
-                let card = document.createElement('div');
-                card.className = 'shop-product-card';
-                card.innerHTML = `
-                    <img src="${prod.image}" alt="${prod.name}" class="shop-product-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=100&auto=format&fit=crop'">
-                    <div class="shop-product-info">
-                        <span class="shop-product-name">${prod.name}</span>
-                        <span class="shop-product-price">Egységár: ${prod.price} Ft</span>
-                    </div>
-                    <div class="shop-order-controls">
-                        <input type="number" id="order-qty-${prod.id}" value="10" min="1" max="100" class="shop-qty-input">
-                    </div>
+            if (webshopViewMode === 'shop') {
+                // Ellenőrizzük a 6 és 12 óra közötti időkorlátot
+                if (currentHour < 6 || currentHour >= 12) {
+                    bodyContainer.innerHTML = `
+                        <div style="text-align: center; padding: 20px; color: #f85149; font-size: 10px; font-weight: bold;">
+                            ⚠️ A webshop zárva van!<br>Rendelni csak 06:00 és 12:00 között lehet.<br><br>Jelenlegi idő: ${String(currentHour).padStart(2,'0')}:${String(gameMinutes%60).padStart(2,'0')}
+                        </div>
+                    `;
+                    return;
+                }
+
+                let cardsDiv = document.createElement('div');
+                cardsDiv.className = 'cards-container';
+
+                if (productsDB.length === 0) {
+                    cardsDiv.innerHTML = '<div style="font-size: 9px; color: #8b949e; text-align: center;">Nincs termék az adatbázisban.</div>';
+                } else {
+                    productsDB.forEach(prod => {
+                        let inCartQty = cart[prod.id] || 0;
+                        let card = document.createElement('div');
+                        card.className = 'product-card';
+                        card.onclick = () => addToCart(prod.id);
+                        card.innerHTML = `
+                            <img src="${prod.image}" alt="${prod.name}" class="product-card-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=100&auto=format&fit=crop'">
+                            <div class="product-card-info">
+                                <span class="product-card-title">${prod.name}</span>
+                                <span class="product-card-sub">Ár: ${prod.price} Ft/db ${inCartQty > '0' ? `| <b>Kosárban: ${inCartQty} karton</b>` : ''}</span>
+                            </div>
+                            <div style="font-size: 9px; color: #00e699; font-weight: bold;">+ Karton</div>
+                        `;
+                        cardsDiv.appendChild(card);
+                    });
+                }
+                bodyContainer.appendChild(cardsDiv);
+
+                let nextBtn = document.createElement('button');
+                nextBtn.className = 'btn-action btn-save';
+                nextBtn.style.cssText = 'padding: 6px; font-size: 10px; margin-top: auto; width: 100%;';
+                nextBtn.innerText = 'Tovább a kosárra ➔';
+                nextBtn.onclick = () => {
+                    webshopViewMode = 'cart';
+                    renderWebshop();
+                };
+                bodyContainer.appendChild(nextBtn);
+
+            } else {
+                // KOSÁR NÉZET
+                let cartDiv = document.createElement('div');
+                cartDiv.className = 'cards-container';
+
+                let cartKeys = Object.keys(cart).filter(id => cart[id] > 0);
+
+                if (cartKeys.length === 0) {
+                    cartDiv.innerHTML = '<div style="font-size: 9px; color: #8b949e; text-align: center; padding: 15px;">A kosarad üres. Kattints a termékekre a webshopban!</div>';
+                } else {
+                    cartKeys.forEach(id => {
+                        let prod = productsDB.find(p => p.id == id);
+                        if (!prod) return;
+                        let qty = cart[id];
+
+                        let card = document.createElement('div');
+                        card.className = 'product-card';
+                        card.innerHTML = `
+                            <img src="${prod.image}" alt="${prod.name}" class="product-card-img">
+                            <div class="product-card-info">
+                                <span class="product-card-title">${prod.name}</span>
+                                <span class="product-card-sub">Mennyiség: ${qty} karton</span>
+                            </div>
+                            <div class="cart-controls">
+                                <button class="btn-qty" onclick="changeCartQty(${prod.id}, -1)">-</button>
+                                <span class="cart-qty-text">${qty}</span>
+                                <button class="btn-qty" onclick="changeCartQty(${prod.id}, 1)">+</button>
+                                <button class="btn-slot-del" onclick="removeFromCart(${prod.id})" style="margin-left: 4px;">🗑️</button>
+                            </div>
+                        `;
+                        cartDiv.appendChild(card);
+                    });
+                }
+                bodyContainer.appendChild(cartDiv);
+
+                let btnGroup = document.createElement('div');
+                btnGroup.className = 'btn-group';
+                btnGroup.innerHTML = `
+                    <button class="btn-action btn-back" onclick="webshopViewMode='shop'; renderWebshop();">Vissza</button>
+                    ${cartKeys.length > 0 ? `<button class="btn-action btn-save" onclick="placeOrder()">Megrendelés (Kamion)</button>` : ''}
                 `;
-                container.appendChild(card);
-            });
+                bodyContainer.appendChild(btnGroup);
+            }
+        }
 
-            let orderBtn = document.createElement('button');
-            orderBtn.className = 'btn-action btn-save';
-            orderBtn.style.cssText = 'padding: 6px; font-size: 10px; margin-top: 6px; width: 100%;';
-            orderBtn.innerText = 'Megrendelés leadása';
-            orderBtn.onclick = placeOrder;
-            container.appendChild(orderBtn);
+        function addToCart(productId) {
+            cart[productId] = (cart[productId] || 0) + 1;
+            showToast("Hozzáadva 1 karton a kosárhoz!");
+            renderWebshop();
+        }
+
+        function changeCartQty(productId, delta) {
+            if (cart[productId]) {
+                cart[productId] += delta;
+                if (cart[productId] <= 0) {
+                    delete cart[productId];
+                }
+            }
+            renderWebshop();
+        }
+
+        function removeFromCart(productId) {
+            delete cart[productId];
+            renderWebshop();
         }
 
         function placeOrder() {
-            let totalOrdered = 0;
-            productsDB.forEach(prod => {
-                let input = document.getElementById(`order-qty-${prod.id}`);
-                if (input) {
-                    let qty = parseInt(input.value) || 0;
-                    if (qty > 0) {
-                        prod.stock += qty;
-                        totalOrdered += qty;
-                    }
-                }
+            let currentHour = Math.floor(gameMinutes / 60);
+            if (currentHour < 6 || currentHour >= 12) {
+                showToast("Rendelni csak 06:00 és 12:00 között lehet!");
+                return;
+            }
+
+            let currentTotalMins = (gameYear - 2026) * 525600 + (gameMonth - 1) * 43200 + (gameDay - 1) * 1440 + gameMinutes;
+            let arrivalTime = currentTotalMins + 360; // 6 óra múlva (360 perc)
+
+            activeDeliveries.push({
+                arrivalTime: arrivalTime,
+                items: { ...cart },
+                arrived: false
             });
-            saveProductsToStorage();
-            showToast(`Sikeres rendelés: ${totalOrdered} db termék!`);
+
+            cart = {};
+            showToast("Megrendelés elküldve! A kamion 6 óra múlva érkezik.");
             closeWebshopApp();
         }
 
         function renderOpeningHoursRows() {
             const container = document.getElementById('opening-days-container');
             container.innerHTML = '';
-
             let timeOptions = "";
             for (let h = 0; h < 24; h++) {
                 let hourStr = String(h).padStart(2, '0') + ":00";
                 timeOptions += `<option value="${hourStr}">${hourStr}</option>`;
             }
-
             dayNames.forEach(day => {
                 let row = document.createElement('div');
                 row.className = 'opening-hours-row';
@@ -1689,7 +1783,6 @@
                     </div>
                 `;
                 container.appendChild(row);
-
                 if (storeOpeningHours[day]) {
                     document.getElementById(`open-${day}`).value = storeOpeningHours[day].open;
                     document.getElementById(`close-${day}`).value = storeOpeningHours[day].close;
@@ -1717,7 +1810,7 @@
             updateClockDisplay();
         }
 
-        // --- PAUSE MENU LOGIKA ---
+        // --- PAUSE & EDITOR LOGIKA ---
         function openPauseMenu() {
             isGamePaused = true; 
             document.getElementById('pause-menu').classList.remove('hidden');
@@ -1754,7 +1847,6 @@
 
         function closeSettings() {
             document.getElementById('settings-menu').classList.add('hidden');
-            
             if (settingsOrigin === 'pause') {
                 document.getElementById('game-scene').classList.remove('hidden');
                 openPauseMenu();
@@ -1764,7 +1856,6 @@
             }
         }
 
-        // --- SZERKESZTŐ MÓD LOGIKA ---
         function toggleEditorModeFromPause() {
             document.getElementById('pause-menu').classList.add('hidden');
             toggleEditorMode();
@@ -1772,7 +1863,6 @@
 
         function toggleEditorMode() {
             isEditorMode = !isEditorMode;
-            
             const pc = document.getElementById('pcFurniture');
             const headerAction = document.getElementById('header-right-action');
             const helperText = document.getElementById('game-helper-text');
@@ -1792,7 +1882,6 @@
             }
         }
 
-        // --- Hosszú nyomás és Drag & Drop ---
         let longPressTimer = null;
         let isFurnitureActive = false;
         let activeDragElement = null;
@@ -1874,7 +1963,6 @@
             }
 
             const viewportRect = document.getElementById('storeGridContainer').getBoundingClientRect();
-            
             let newX = clientX - viewportRect.left - dragOffsetX;
             let newY = clientY - viewportRect.top - dragOffsetY;
 
@@ -1906,7 +1994,6 @@
             pc.style.transform = `rotate(${currentRotation}deg)`;
         }
 
-        // --- MENTÉSI ÉS SLOT KEZELÉS ---
         function getSaves() {
             let saves = JSON.parse(localStorage.getItem('supermarket_saves'));
             if (!saves) {
@@ -2058,7 +2145,6 @@
             gameDay = parseInt(parts[2]) || 1;
         }
 
-        // --- TEXTÚRA ÉS KÉPBETÖLTŐ ---
         function startLoadingScreen(storeName, titleText, loadingSubtitle) {
             const loadingScreen = document.getElementById('game-loading-screen');
             const loaderBar = document.getElementById('game-loader-bar');
@@ -2114,7 +2200,6 @@
             document.getElementById('active-store-name').innerText = storeName;
             document.getElementById('game-scene').classList.remove('hidden');
             
-            // Főmenü háttér és elemek elrejtése játékon belül
             document.getElementById('main-menu-bg-img').classList.add('hidden');
             document.getElementById('main-menu-overlay').classList.add('hidden');
             document.getElementById('main-header').classList.add('hidden');
@@ -2133,7 +2218,6 @@
             document.getElementById('pause-menu').classList.add('hidden');
             document.getElementById('game-scene').classList.add('hidden');
             
-            // Főmenü háttér és elemek visszahozatala
             document.getElementById('main-menu-bg-img').classList.remove('hidden');
             document.getElementById('main-menu-overlay').classList.remove('hidden');
             document.getElementById('main-header').classList.remove('hidden');
