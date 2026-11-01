@@ -168,7 +168,7 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 230, 153, 0); }
         }
 
-        /* FŐMENÜ HÁTTÉRKÉP ÉS ELRENDEZÉS */
+        /* FŐMENÜ ÚJ HÁTTÉRKÉP & OVERLAY */
         .main-menu-bg {
             position: absolute;
             top: 0;
@@ -185,8 +185,309 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(180deg, rgba(13, 17, 23, 0.4) 0%, rgba(13, 17, 23, 0.85) 50%, rgba(13, 17, 23, 0.95) 100%);
+            background: linear-gradient(180deg, rgba(13, 17, 23, 0.45) 0%, rgba(13, 17, 23, 0.85) 60%, rgba(13, 17, 23, 0.95) 100%);
             z-index: 2;
+        }
+
+        /* FŐMENÜ KÖZÉPRE IGAZÍTOTT TARTALOM */
+        .menu-content-wrapper {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 3;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        /* Fejléc a főmenüben logóval */
+        .header {
+            position: relative;
+            z-index: 3;
+            padding-top: 10px;
+            padding-bottom: 2px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex-shrink: 0;
+            width: 100%;
+        }
+
+        .main-logo-img {
+            max-width: 75px;
+            width: 25%;
+            height: auto;
+            margin-bottom: 2px;
+            filter: drop-shadow(0 0 8px rgba(0, 230, 153, 0.5));
+        }
+
+        .title {
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            background: linear-gradient(90deg, #00e699, #00b3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            padding: 0 8px;
+        }
+
+        .subtitle {
+            font-size: 8px;
+            color: #8b949e;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+            margin-top: 1px;
+        }
+
+        /* Menü Nézetek - Középre igazítva */
+        .view-panel {
+            position: relative;
+            z-index: 3;
+            padding: 0 10px;
+            width: 100%;
+            max-width: 340px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            flex: 1;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Menü Gombok */
+        .btn {
+            background: rgba(22, 27, 34, 0.85);
+            border: 1px solid #30363d;
+            border-left: 4px solid #00e699;
+            color: #f0f6fc;
+            padding: 10px 14px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(5px);
+            width: 100%;
+        }
+
+        .btn:hover, .btn:active {
+            background: rgba(33, 38, 45, 0.95);
+            border-color: #58a6ff;
+            border-left-color: #00b3ff;
+            transform: translateY(-1px);
+        }
+
+        /* Terhelés / Slotok Nézet */
+        .slots-container {
+            width: 100%;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 2px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .slots-container::-webkit-scrollbar {
+            width: 3px;
+        }
+        .slots-container::-webkit-scrollbar-thumb {
+            background: #30363d;
+            border-radius: 3px;
+        }
+
+        .save-slot {
+            background: rgba(22, 27, 34, 0.9);
+            border: 1px solid #30363d;
+            border-left: 4px solid #58a6ff;
+            border-radius: 6px;
+            padding: 6px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .save-slot.empty {
+            border-left-color: #484f58;
+            opacity: 0.85;
+        }
+
+        .slot-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .slot-title {
+            font-size: 10px;
+            font-weight: 800;
+            color: #f0f6fc;
+        }
+
+        .slot-details {
+            font-size: 9px;
+            color: #8b949e;
+        }
+
+        .slot-actions {
+            display: flex;
+            gap: 5px;
+        }
+
+        .btn-slot-del {
+            background: rgba(248, 81, 73, 0.15);
+            border: 1px solid #f85149;
+            color: #f85149;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-slot-del:hover {
+            background: #f85149;
+            color: #fff;
+        }
+
+        /* Beállítások Nézet */
+        .settings-container {
+            width: 100%;
+            max-height: 280px;
+            overflow-y: auto;
+            padding-right: 2px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 6px;
+        }
+
+        .settings-container::-webkit-scrollbar {
+            width: 3px;
+        }
+        .settings-container::-webkit-scrollbar-thumb {
+            background: #00e699;
+            border-radius: 3px;
+        }
+
+        .setting-group {
+            background: rgba(22, 27, 34, 0.9);
+            border: 1px solid #30363d;
+            border-radius: 6px;
+            padding: 5px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            width: 100%;
+        }
+
+        .setting-label {
+            font-size: 9px;
+            font-weight: 700;
+            color: #c9d1d9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .setting-value {
+            color: #00e699;
+            font-size: 9px;
+        }
+
+        select {
+            width: 100%;
+            background: #0d1117;
+            border: 1px solid #30363d;
+            color: #f0f6fc;
+            padding: 3px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            outline: none;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            accent-color: #00e699;
+            cursor: pointer;
+        }
+
+        .checkbox-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        .checkbox-row input[type="checkbox"] {
+            width: 12px;
+            height: 12px;
+            accent-color: #00e699;
+            cursor: pointer;
+        }
+
+        /* Alsó fix gombpár */
+        .btn-group {
+            display: flex;
+            gap: 6px;
+            width: 100%;
+            padding-top: 4px;
+            flex-shrink: 0;
+        }
+
+        .btn-action {
+            flex: 1;
+            padding: 7px;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 6px;
+            border: 1px solid #30363d;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+
+        .btn-save {
+            background: #00e699;
+            color: #0d1117;
+            border-color: #00e699;
+        }
+
+        .btn-save:hover {
+            background: #00b3ff;
+            border-color: #00b3ff;
+            color: #ffffff;
+        }
+
+        .btn-back {
+            background: #21262d;
+            color: #c9d1d9;
+        }
+
+        .btn-back:hover {
+            background: #30363d;
+            color: #ffffff;
         }
 
         /* JÁTÉK JELENET */
@@ -567,259 +868,6 @@
             gap: 5px;
         }
 
-        /* Főmenü Tartalom (Középre igazítva a háttérképhez) */
-        .menu-content-wrapper {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 3;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        /* Menü Nézetek */
-        .view-panel {
-            position: relative;
-            z-index: 3;
-            padding: 0 12px;
-            width: 100%;
-            max-width: 360px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-            flex: 1;
-            justify-content: center;
-        }
-
-        .hidden {
-            display: none !important;
-        }
-
-        /* Menü Gombok */
-        .btn {
-            background: rgba(22, 27, 34, 0.85);
-            border: 1px solid #30363d;
-            border-left: 4px solid #00e699;
-            color: #f0f6fc;
-            padding: 10px 14px;
-            font-size: 12px;
-            font-weight: 700;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(5px);
-            width: 100%;
-        }
-
-        .btn:hover, .btn:active {
-            background: rgba(33, 38, 45, 0.95);
-            border-color: #58a6ff;
-            border-left-color: #00b3ff;
-            transform: translateY(-1px);
-        }
-
-        /* Terhelés / Slotok Nézet */
-        .slots-container {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 4px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .slots-container::-webkit-scrollbar {
-            width: 3px;
-        }
-        .slots-container::-webkit-scrollbar-thumb {
-            background: #30363d;
-            border-radius: 3px;
-        }
-
-        .save-slot {
-            background: rgba(22, 27, 34, 0.9);
-            border: 1px solid #30363d;
-            border-left: 4px solid #58a6ff;
-            border-radius: 6px;
-            padding: 6px 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            transition: all 0.2s ease;
-        }
-
-        .save-slot.empty {
-            border-left-color: #484f58;
-            opacity: 0.8;
-        }
-
-        .slot-info {
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-            cursor: pointer;
-            flex: 1;
-        }
-
-        .slot-title {
-            font-size: 10px;
-            font-weight: 800;
-            color: #f0f6fc;
-        }
-
-        .slot-details {
-            font-size: 9px;
-            color: #8b949e;
-        }
-
-        .slot-actions {
-            display: flex;
-            gap: 5px;
-        }
-
-        .btn-slot-del {
-            background: rgba(248, 81, 73, 0.15);
-            border: 1px solid #f85149;
-            color: #f85149;
-            padding: 3px 6px;
-            border-radius: 4px;
-            font-size: 9px;
-            font-weight: 700;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .btn-slot-del:hover {
-            background: #f85149;
-            color: #fff;
-        }
-
-        /* Beállítások Nézet */
-        .settings-container {
-            flex: 1;
-            overflow-y: auto;
-            padding-right: 4px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            margin-bottom: 4px;
-        }
-
-        .settings-container::-webkit-scrollbar {
-            width: 3px;
-        }
-        .settings-container::-webkit-scrollbar-thumb {
-            background: #00e699;
-            border-radius: 3px;
-        }
-
-        .setting-group {
-            background: rgba(22, 27, 34, 0.85);
-            border: 1px solid #30363d;
-            border-radius: 6px;
-            padding: 4px 8px;
-            display: flex;
-            flex-direction: column;
-            gap: 2px;
-        }
-
-        .setting-label {
-            font-size: 9px;
-            font-weight: 700;
-            color: #c9d1d9;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .setting-value {
-            color: #00e699;
-            font-size: 9px;
-        }
-
-        select {
-            width: 100%;
-            background: #0d1117;
-            border: 1px solid #30363d;
-            color: #f0f6fc;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 9px;
-            outline: none;
-        }
-
-        input[type="range"] {
-            width: 100%;
-            accent-color: #00e699;
-            cursor: pointer;
-        }
-
-        .checkbox-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-
-        .checkbox-row input[type="checkbox"] {
-            width: 12px;
-            height: 12px;
-            accent-color: #00e699;
-            cursor: pointer;
-        }
-
-        /* Alsó fix gombpár */
-        .btn-group {
-            display: flex;
-            gap: 6px;
-            padding-top: 3px;
-            padding-bottom: 3px;
-            flex-shrink: 0;
-        }
-
-        .btn-action {
-            flex: 1;
-            padding: 6px;
-            font-size: 10px;
-            font-weight: 700;
-            border-radius: 6px;
-            border: 1px solid #30363d;
-            cursor: pointer;
-            text-align: center;
-            transition: all 0.2s ease;
-        }
-
-        .btn-save {
-            background: #00e699;
-            color: #0d1117;
-            border-color: #00e699;
-        }
-
-        .btn-save:hover {
-            background: #00b3ff;
-            border-color: #00b3ff;
-            color: #ffffff;
-        }
-
-        .btn-back {
-            background: #21262d;
-            color: #c9d1d9;
-        }
-
-        .btn-back:hover {
-            background: #30363d;
-            color: #ffffff;
-        }
-
         /* Lábléc */
         .footer {
             position: absolute;
@@ -882,7 +930,7 @@
         
         <!-- KEZDŐ SPLASH SCREEN -->
         <div id="splash-screen" class="splash-screen" onclick="handleSplashClick()">
-            <img id="splash-img" src="https://www.dropbox.com/scl/fi/tcbl78dg0iuf518ca5z9m/file_000000002bac8210941574a47bc1c76f.png?rlkey=wpkyr7l9q6dyadn5niyj0oe6d&st=7zmrwkuq&dl=1" alt="Supermarket Simulator 2D Splash" class="splash-bg-img">
+            <img id="splash-img" src="https://www.dropbox.com/scl/fi/4ianmmd46w06ed6fzbesz/Supermarket.png?rlkey=5ih8i8dxtcnb19ja5jpss7grj&st=a53paco9&dl=1" alt="Supermarket Simulator 2D Splash" class="splash-bg-img">
             <div class="splash-overlay"></div>
             <div class="splash-content">
                 <div class="splash-title">SUPERMARKET SIMULATOR 2D</div>
@@ -896,7 +944,7 @@
 
         <!-- JÁTÉK TÖLTŐKÉPERNYŐ -->
         <div id="game-loading-screen" class="splash-screen fade-out" style="pointer-events: none;">
-            <img src="https://www.dropbox.com/scl/fi/tcbl78dg0iuf518ca5z9m/file_000000002bac8210941574a47bc1c76f.png?rlkey=wpkyr7l9q6dyadn5niyj0oe6d&st=7zmrwkuq&dl=1" alt="Game Loading Background" class="splash-bg-img">
+            <img src="https://www.dropbox.com/scl/fi/4ianmmd46w06ed6fzbesz/Supermarket.png?rlkey=5ih8i8dxtcnb19ja5jpss7grj&st=a53paco9&dl=1" alt="Game Loading Background" class="splash-bg-img">
             <div class="splash-overlay"></div>
             <div class="splash-content">
                 <div class="splash-title" id="game-load-title">ÚJ JÁTÉK MENTÉSE...</div>
@@ -1011,11 +1059,18 @@
         <div id="toast" class="toast">Értesítés</div>
         <div class="bg-grid"></div>
 
-        <!-- FŐMENÜ HÁTTÉRKÉP ÉS OVERLAY -->
-        <img src="https://www.dropbox.com/scl/fi/tcbl78dg0iuf518ca5z9m/file_000000002bac8210941574a47bc1c76f.png?rlkey=wpkyr7l9q6dyadn5niyj0oe6d&st=7zmrwkuq&dl=1" alt="Main Menu BG" class="main-menu-bg" id="main-menu-bg-img">
+        <!-- FŐMENÜ ÚJ HÁTTÉRKÉP & OVERLAY -->
+        <img src="https://www.dropbox.com/scl/fi/4ianmmd46w06ed6fzbesz/Supermarket.png?rlkey=5ih8i8dxtcnb19ja5jpss7grj&st=a53paco9&dl=1" alt="Main Menu BG" class="main-menu-bg" id="main-menu-bg-img">
         <div class="main-menu-overlay" id="main-menu-overlay"></div>
 
-        <!-- FŐMENÜ KÖZÉPRE IGAZÍTOTT TARTALOM (LOGÓ NÉLKÜL) -->
+        <!-- Visszahelyezett Fejléc (Logóval) -->
+        <div class="header" id="main-header">
+            <img src="https://www.dropbox.com/scl/fi/1vbaxptj4ispe8bqzwr3v/file_000000002bac8210941574a47bc1c76f-1.png?rlkey=n8lnw6w3qkjlpy8gmfakj3e4d&st=1nl6gdkn&dl=1" alt="Supermarket Logo" class="main-logo-img">
+            <div class="title" id="page-title">SUPERMARKET SIMULATOR 2D</div>
+            <div class="subtitle" id="page-subtitle">FŐMENÜ</div>
+        </div>
+
+        <!-- FŐMENÜ KÖZÉPRE IGAZÍTOTT TARTALOM (MINDEN ALMENÜVEL) -->
         <div class="menu-content-wrapper">
             <!-- FŐMENÜ NÉZET -->
             <div id="main-menu" class="view-panel">
@@ -1391,6 +1446,7 @@
             slotMode = 'pause_save'; 
             document.getElementById('game-scene').classList.add('hidden');
             document.getElementById('load-menu').classList.remove('hidden');
+            document.getElementById('page-subtitle').innerText = 'JÁTÉK MENTÉSE - VÁLASSZ SLOTOT';
             renderSlots();
         }
 
@@ -1399,12 +1455,14 @@
             document.getElementById('pause-menu').classList.add('hidden');
             document.getElementById('game-scene').classList.add('hidden');
             document.getElementById('settings-menu').classList.remove('hidden');
+            document.getElementById('page-subtitle').innerText = 'BEÁLLÍTÁSOK';
         }
 
         function openMainMenuSettings() {
             settingsOrigin = 'main'; 
             document.getElementById('main-menu').classList.add('hidden');
             document.getElementById('settings-menu').classList.remove('hidden');
+            document.getElementById('page-subtitle').innerText = 'BEÁLLÍTÁSOK';
         }
 
         function closeSettings() {
@@ -1415,6 +1473,7 @@
                 openPauseMenu();
             } else {
                 document.getElementById('main-menu').classList.remove('hidden');
+                document.getElementById('page-subtitle').innerText = 'FŐMENÜ';
             }
         }
 
@@ -1595,6 +1654,7 @@
             gameDay = 1;
             document.getElementById('main-menu').classList.add('hidden');
             document.getElementById('load-menu').classList.remove('hidden');
+            document.getElementById('page-subtitle').innerText = 'ÚJ JÁTÉK - VÁLASSZ SLOTOT';
             renderSlots();
         }
 
@@ -1613,6 +1673,7 @@
             slotMode = 'load';
             document.getElementById('main-menu').classList.add('hidden');
             document.getElementById('load-menu').classList.remove('hidden');
+            document.getElementById('page-subtitle').innerText = 'MENTÉSI SLOTOK';
             renderSlots();
         }
 
@@ -1623,6 +1684,7 @@
                 openPauseMenu();
             } else {
                 document.getElementById('main-menu').classList.remove('hidden');
+                document.getElementById('page-subtitle').innerText = 'FŐMENÜ';
             }
         }
 
@@ -1713,7 +1775,7 @@
         function startLoadingScreen(storeName, titleText, loadingSubtitle) {
             const loadingScreen = document.getElementById('game-loading-screen');
             const loaderBar = document.getElementById('game-loader-bar');
-            const loadingText = document.getElementById('game-loading-text');
+            const loadingText = document.getElementById('loading-text');
             const loadTitle = document.getElementById('game-load-title');
             const barBox = document.getElementById('game-bar-box');
 
@@ -1767,6 +1829,7 @@
             // Főmenü háttér és elemek elrejtése játékon belül
             document.getElementById('main-menu-bg-img').classList.add('hidden');
             document.getElementById('main-menu-overlay').classList.add('hidden');
+            document.getElementById('main-header').classList.add('hidden');
             document.querySelector('.menu-content-wrapper').classList.add('hidden');
             document.getElementById('main-footer').classList.add('hidden');
 
@@ -1785,9 +1848,11 @@
             // Főmenü háttér és elemek visszahozatala
             document.getElementById('main-menu-bg-img').classList.remove('hidden');
             document.getElementById('main-menu-overlay').classList.remove('hidden');
+            document.getElementById('main-header').classList.remove('hidden');
             document.querySelector('.menu-content-wrapper').classList.remove('hidden');
             document.getElementById('main-footer').classList.remove('hidden');
             document.getElementById('main-menu').classList.remove('hidden');
+            document.getElementById('page-subtitle').innerText = 'FŐMENÜ';
 
             isEditorMode = false;
         }
