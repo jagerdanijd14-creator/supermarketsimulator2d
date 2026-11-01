@@ -168,7 +168,7 @@
             100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(0, 230, 153, 0); }
         }
 
-        /* FŐMENÜ ÚJ HÁTTÉRKÉP & OVERLAY */
+        /* FŐMENÜ HÁTTÉRKÉP & OVERLAY */
         .main-menu-bg {
             position: absolute;
             top: 0;
@@ -204,7 +204,7 @@
             padding: 15px;
         }
 
-        /* Fejléc a főmenüben logóval */
+        /* Fejléc a főmenüben logóval és szerkesztő gombbal */
         .header {
             position: relative;
             z-index: 3;
@@ -216,6 +216,27 @@
             align-items: center;
             flex-shrink: 0;
             width: 100%;
+        }
+
+        .db-edit-btn-top {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            background: rgba(22, 27, 34, 0.85);
+            border: 1px solid #30363d;
+            color: #00e699;
+            padding: 4px 8px;
+            font-size: 11px;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            backdrop-filter: blur(5px);
+        }
+
+        .db-edit-btn-top:hover {
+            background: #21262d;
+            border-color: #00e699;
         }
 
         .main-logo-img {
@@ -370,7 +391,7 @@
             color: #fff;
         }
 
-        /* Beállítások Nézet */
+        /* Beállítások és Adatbázis Szerkesztő Nézet */
         .settings-container {
             width: 100%;
             max-height: 280px;
@@ -415,12 +436,12 @@
             font-size: 9px;
         }
 
-        select {
+        select, input[type="text"], input[type="number"] {
             width: 100%;
             background: #0d1117;
             border: 1px solid #30363d;
             color: #f0f6fc;
-            padding: 3px 6px;
+            padding: 4px 6px;
             border-radius: 4px;
             font-size: 9px;
             outline: none;
@@ -762,6 +783,7 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            margin-bottom: 4px;
         }
 
         .shop-product-img {
@@ -1081,19 +1103,8 @@
                     <div class="win-window-title">🛒 Nagyker Webshop (Árurendelés)</div>
                     <button class="win-close-btn" onclick="closeWebshopApp()">✕</button>
                 </div>
-                <div class="win-window-body">
-                    <div class="shop-product-card">
-                        <img src="https://www.dropbox.com/scl/fi/xu3kvqlqr8l9fpu2zsas1/images.jpeg?rlkey=np8hpz64rs3o8np3y56rphl22&st=1tn9qnsr&dl=1" alt="Gabonapehely" class="shop-product-img">
-                        <div class="shop-product-info">
-                            <span class="shop-product-name">Gabonapehely (Doboz)</span>
-                            <span class="shop-product-price">Egységár: 120 Ft</span>
-                        </div>
-                        <div class="shop-order-controls">
-                            <input type="number" id="order-qty-cereal" value="10" min="1" max="100" class="shop-qty-input">
-                        </div>
-                    </div>
-
-                    <button class="btn-action btn-save" onclick="placeOrder()" style="padding: 6px; font-size: 10px; margin-top: auto;">Megrendelés leadása</button>
+                <div class="win-window-body" id="webshop-products-container">
+                    <!-- Termékek dinamikusan generálva az adatbázisból -->
                 </div>
             </div>
 
@@ -1143,8 +1154,9 @@
         <img src="https://www.dropbox.com/scl/fi/4ianmmd46w06ed6fzbesz/Supermarket.png?rlkey=5ih8i8dxtcnb19ja5jpss7grj&st=a53paco9&dl=1" alt="Main Menu BG" class="main-menu-bg" id="main-menu-bg-img">
         <div class="main-menu-overlay" id="main-menu-overlay"></div>
 
-        <!-- Visszahelyezett Fejléc (Logóval) -->
+        <!-- Fejléc (Logóval és Jobb Felső Szerkesztő Gombbal) -->
         <div class="header" id="main-header">
+            <button class="db-edit-btn-top" onclick="openDatabaseEditor()">🛠️ Adatbázis</button>
             <img src="https://www.dropbox.com/scl/fi/1vbaxptj4ispe8bqzwr3v/file_000000002bac8210941574a47bc1c76f-1.png?rlkey=n8lnw6w3qkjlpy8gmfakj3e4d&st=1nl6gdkn&dl=1" alt="Supermarket Logo" class="main-logo-img">
             <div class="title" id="page-title">SUPERMARKET SIMULATOR 2D</div>
             <div class="subtitle" id="page-subtitle">FŐMENÜ</div>
@@ -1183,6 +1195,17 @@
                 </div>
                 <div class="btn-group">
                     <button class="btn-action btn-back" onclick="closeLoadMenu()">Vissza</button>
+                </div>
+            </div>
+
+            <!-- ADATBÁZIS SZERKESZTŐ NÉZET -->
+            <div id="database-menu" class="view-panel hidden">
+                <div class="settings-container" id="db-products-list">
+                    <!-- Termékek listája és szerkesztője -->
+                </div>
+                <div class="btn-group">
+                    <button class="btn-action btn-save" onclick="addNewProductPrompt()">+ Új termék</button>
+                    <button class="btn-action btn-back" onclick="closeDatabaseEditor()">Vissza</button>
                 </div>
             </div>
 
@@ -1294,9 +1317,22 @@
         let gameDay = 1;
         let gameTimerInterval = null;
         let isGamePaused = false;
-        let inventoryCereal = 0; // Raktáron lévő gabonapehely
 
-        // Nyitvatartás adatok és a hét napjai (Csütörtökkel indul a 2026.01.01.)
+        // Termék adatbázis (Alapértelmezetten a kért gabonapehellyel)
+        let productsDB = [
+            { id: 1, name: "Gabonapehely (Doboz)", price: 120, stock: 0, image: "https://www.dropbox.com/scl/fi/xu3kvqlqr8l9fpu2zsas1/images.jpeg?rlkey=np8hpz64rs3o8np3y56rphl22&st=1tn9qnsr&dl=1" }
+        ];
+
+        // Dropbox link átalakító függvény (dl=0 / dl=1 kezelés)
+        function formatDropboxLink(url) {
+            if (!url) return '';
+            if (url.includes('dropbox.com')) {
+                return url.replace('dl=0', 'dl=1');
+            }
+            return url;
+        }
+
+        // Nyitvatartás adatok és a hét napjai
         const dayNames = ["Csütörtök", "Péntek", "Szombat", "Vasárnap", "Hétfő", "Kedd", "Szerda"];
         let storeOpeningHours = {
             "Csütörtök": { open: "08:00", close: "20:00" },
@@ -1308,7 +1344,7 @@
             "Szerda": { open: "08:00", close: "20:00" }
         };
 
-        // 30x40 rács generálása indításkor + 10 mp-es max időkorlát (biztonsági timeout)
+        // Betöltés kezelés és timeout
         window.addEventListener('DOMContentLoaded', () => {
             const gridContainer = document.getElementById('storeGridContainer');
             for (let r = 1; r <= 40; r++) {
@@ -1319,6 +1355,7 @@
                 }
             }
 
+            loadProductsFromStorage();
             renderOpeningHoursRows();
 
             const loaderBar = document.getElementById('loader-bar');
@@ -1336,7 +1373,7 @@
 
             const startTime = Date.now();
             const minTime = 1500;  
-            const maxTime = 10000; // 10 másodperces maximális időkorlát
+            const maxTime = 10000; 
 
             const interval = setInterval(() => {
                 const elapsedTime = Date.now() - startTime;
@@ -1368,7 +1405,99 @@
             }
         }
 
-        // --- IDŐ ÉS ÓRA LOGIKA + NYITVA/ZÁRVA FIGYELÉS ---
+        // --- ADATBÁZIS KEZELÉS (LocalStorage) ---
+        function loadProductsFromStorage() {
+            let savedDB = localStorage.getItem('supermarket_products_db');
+            if (savedDB) {
+                try {
+                    productsDB = JSON.parse(savedDB);
+                } catch(e) {}
+            }
+        }
+
+        function saveProductsToStorage() {
+            localStorage.setItem('supermarket_products_db', JSON.stringify(productsDB));
+        }
+
+        function openDatabaseEditor() {
+            document.getElementById('main-menu').classList.add('hidden');
+            document.getElementById('database-menu').classList.remove('hidden');
+            document.getElementById('page-subtitle').innerText = 'ADATBÁZIS SZERKESZTŐ';
+            renderDatabaseEditor();
+        }
+
+        function closeDatabaseEditor() {
+            document.getElementById('database-menu').classList.add('hidden');
+            document.getElementById('main-menu').classList.remove('hidden');
+            document.getElementById('page-subtitle').innerText = 'FŐMENÜ';
+        }
+
+        function renderDatabaseEditor() {
+            const container = document.getElementById('db-products-list');
+            container.innerHTML = '';
+
+            productsDB.forEach((prod, index) => {
+                let group = document.createElement('div');
+                group.className = 'setting-group';
+                group.innerHTML = `
+                    <div class="setting-label">
+                        <span>Termék #${index + 1}</span>
+                        <button class="btn-slot-del" onclick="deleteProduct(${prod.id})">Törlés</button>
+                    </div>
+                    <div style="display: flex; flex-direction: column; gap: 3px; margin-top: 4px;">
+                        <input type="text" id="db-name-${prod.id}" value="${prod.name}" placeholder="Termék neve">
+                        <div style="display: flex; gap: 5px;">
+                            <input type="number" id="db-price-${prod.id}" value="${prod.price}" placeholder="Ár (Ft)" style="width: 50%;">
+                        </div>
+                        <input type="text" id="db-img-${prod.id}" value="${prod.image}" placeholder="Dropbox Kép Link">
+                        <button class="btn-action btn-save" onclick="updateProduct(${prod.id})" style="padding: 3px; font-size: 9px; margin-top: 2px;">Módosítás mentése</button>
+                    </div>
+                `;
+                container.appendChild(group);
+            });
+        }
+
+        function addNewProductPrompt() {
+            let name = prompt("Add meg az új termék nevét:", "Új termék");
+            if (!name) return;
+            let price = parseInt(prompt("Add meg az árát (Ft):", "150")) || 100;
+            let img = prompt("Add meg a Dropbox kép linkjét:", "https://www.dropbox.com/...");
+            
+            let newId = productsDB.length > 0 ? Math.max(...productsDB.map(p => p.id)) + 1 : 1;
+            productsDB.push({
+                id: newId,
+                name: name,
+                price: price,
+                stock: 0,
+                image: formatDropboxLink(img)
+            });
+
+            saveProductsToStorage();
+            renderDatabaseEditor();
+            showToast("Termék sikeresen hozzáadva!");
+        }
+
+        function updateProduct(id) {
+            let prod = productsDB.find(p => p.id === id);
+            if (!prod) return;
+
+            prod.name = document.getElementById(`db-name-${id}`).value;
+            prod.price = parseInt(document.getElementById(`db-price-${id}`).value) || prod.price;
+            prod.image = formatDropboxLink(document.getElementById(`db-img-${id}`).value);
+
+            saveProductsToStorage();
+            renderDatabaseEditor();
+            showToast("Termék frissítve!");
+        }
+
+        function deleteProduct(id) {
+            productsDB = productsDB.filter(p => p.id !== id);
+            saveProductsToStorage();
+            renderDatabaseEditor();
+            showToast("Termék törölve!");
+        }
+
+        // --- IDŐ ÉS ÓRA LOGIKA ---
         function startGameTimer() {
             if (gameTimerInterval) clearInterval(gameTimerInterval);
             
@@ -1466,20 +1595,60 @@
         function openWebshopApp() {
             document.getElementById('opening-hours-window').classList.add('hidden');
             document.getElementById('webshop-window').classList.remove('hidden');
+            renderWebshopProducts();
         }
 
         function closeWebshopApp() {
             document.getElementById('webshop-window').classList.add('hidden');
         }
 
-        function placeOrder() {
-            let qty = parseInt(document.getElementById('order-qty-cereal').value) || 0;
-            if (qty <= 0) {
-                showToast('Add meg a rendelési mennyiséget!');
+        function renderWebshopProducts() {
+            const container = document.getElementById('webshop-products-container');
+            container.innerHTML = '';
+
+            if (productsDB.length === 0) {
+                container.innerHTML = '<div style="font-size: 9px; color: #8b949e; text-align: center; padding: 10px;">Nincs elérhető termék az adatbázisban. Add hozzá az Adatbázis szerkesztőben!</div>';
                 return;
             }
-            inventoryCereal += qty;
-            showToast(`Sikeres rendelés: ${qty} db gabonapehely!`);
+
+            productsDB.forEach(prod => {
+                let card = document.createElement('div');
+                card.className = 'shop-product-card';
+                card.innerHTML = `
+                    <img src="${prod.image}" alt="${prod.name}" class="shop-product-img" onerror="this.src='https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=100&auto=format&fit=crop'">
+                    <div class="shop-product-info">
+                        <span class="shop-product-name">${prod.name}</span>
+                        <span class="shop-product-price">Egységár: ${prod.price} Ft</span>
+                    </div>
+                    <div class="shop-order-controls">
+                        <input type="number" id="order-qty-${prod.id}" value="10" min="1" max="100" class="shop-qty-input">
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+
+            let orderBtn = document.createElement('button');
+            orderBtn.className = 'btn-action btn-save';
+            orderBtn.style.cssText = 'padding: 6px; font-size: 10px; margin-top: 6px; width: 100%;';
+            orderBtn.innerText = 'Megrendelés leadása';
+            orderBtn.onclick = placeOrder;
+            container.appendChild(orderBtn);
+        }
+
+        function placeOrder() {
+            let totalOrdered = 0;
+            productsDB.forEach(prod => {
+                let input = document.getElementById(`order-qty-${prod.id}`);
+                if (input) {
+                    let qty = parseInt(input.value) || 0;
+                    if (qty > 0) {
+                        prod.stock += qty;
+                        totalOrdered += qty;
+                    }
+                }
+            });
+            saveProductsToStorage();
+            showToast(`Sikeres rendelés: ${totalOrdered} db termék!`);
             closeWebshopApp();
         }
 
@@ -1874,7 +2043,7 @@
             gameDay = parseInt(parts[2]) || 1;
         }
 
-        // --- VALÓDI KÉP- ÉS TEXTÚRABETÖLTŐ (Beleértve az új gabonapehely képet is) ---
+        // --- TEXTÚRA ÉS KÉPBETÖLTŐ ---
         function startLoadingScreen(storeName, titleText, loadingSubtitle) {
             const loadingScreen = document.getElementById('game-loading-screen');
             const loaderBar = document.getElementById('game-loader-bar');
@@ -1893,7 +2062,7 @@
                 'https://www.dropbox.com/scl/fi/sy0qochnz1xeugudglqer/parquetry-patterns-550x749-1.jpg?rlkey=f345v0cw0gdrsadef6103b6we&dl=1', 
                 'https://www.dropbox.com/scl/fi/2bt1ea9fnynk0m382ny5b/wooden-table-office-desk_64749-3209.jpg?rlkey=5jd82eokskyng6x50ug86ylgb&dl=1',
                 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop',
-                'https://www.dropbox.com/scl/fi/xu3kvqlqr8l9fpu2zsas1/images.jpeg?rlkey=np8hpz64rs3o8np3y56rphl22&st=1tn9qnsr&dl=1' // Gabonapehely kép
+                'https://www.dropbox.com/scl/fi/xu3kvqlqr8l9fpu2zsas1/images.jpeg?rlkey=np8hpz64rs3o8np3y56rphl22&st=1tn9qnsr&dl=1'
             ];
 
             let loadedCount = 0;
