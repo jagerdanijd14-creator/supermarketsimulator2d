@@ -671,7 +671,7 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 60px;
+            width: 65px;
             cursor: pointer;
             padding: 4px;
             border-radius: 4px;
@@ -689,14 +689,14 @@
         }
 
         .desktop-icon-text {
-            font-size: 10px;
+            font-size: 9px;
             color: #ffffff;
             text-shadow: 0 1px 3px rgba(0,0,0,0.9);
             text-align: center;
             font-weight: 600;
         }
 
-        /* Windows Ablak (Nyitvatartás App) */
+        /* Windows Ablak (Nyitvatartás & Webshop) */
         .win-window {
             position: absolute;
             top: 50%;
@@ -745,12 +745,66 @@
         }
 
         .win-window-body {
-            padding: 6px;
+            padding: 8px;
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 6px;
             flex: 1;
-            overflow: hidden;
+            overflow-y: auto;
+        }
+
+        /* Webshop Termék Kártya */
+        .shop-product-card {
+            background: #252526;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .shop-product-img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 4px;
+            border: 1px solid #444;
+        }
+
+        .shop-product-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .shop-product-name {
+            font-size: 10px;
+            font-weight: 700;
+            color: #00e699;
+        }
+
+        .shop-product-price {
+            font-size: 9px;
+            color: #8b949e;
+        }
+
+        .shop-order-controls {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .shop-qty-input {
+            width: 40px;
+            background: #1e1e1e;
+            border: 1px solid #444;
+            color: #fff;
+            text-align: center;
+            padding: 3px;
+            border-radius: 4px;
+            font-size: 10px;
         }
 
         .opening-hours-row {
@@ -998,6 +1052,10 @@
                     <div class="desktop-icon-img">🕒</div>
                     <div class="desktop-icon-text">Nyitvatartás</div>
                 </div>
+                <div class="desktop-icon" onclick="openWebshopApp()" style="margin-top: 5px;">
+                    <div class="desktop-icon-img">🛒</div>
+                    <div class="desktop-icon-text">Webshop</div>
+                </div>
             </div>
 
             <!-- Nyitvatartás Alkalmazás Ablak -->
@@ -1009,11 +1067,33 @@
                 <div class="win-window-body">
                     <button class="btn-action btn-save" onclick="setAll024()" style="font-size: 9px; padding: 3px;">Minden nap 0-24 óra beállítása</button>
                     
-                    <div id="opening-days-container" style="display: flex; flex-direction: column; gap: 3px; overflow-y: auto; max-height: 240px;">
+                    <div id="opening-days-container" style="display: flex; flex-direction: column; gap: 3px; overflow-y: auto; max-height: 200px;">
                         <!-- Napok generálása JS-sel -->
                     </div>
 
                     <button class="btn-action btn-save" onclick="saveOpeningHours()" style="padding: 4px; font-size: 9px;">Mentés</button>
+                </div>
+            </div>
+
+            <!-- Webshop / Áruk Rendelése Ablak -->
+            <div id="webshop-window" class="win-window hidden">
+                <div class="win-window-header">
+                    <div class="win-window-title">🛒 Nagyker Webshop (Árurendelés)</div>
+                    <button class="win-close-btn" onclick="closeWebshopApp()">✕</button>
+                </div>
+                <div class="win-window-body">
+                    <div class="shop-product-card">
+                        <img src="https://www.dropbox.com/scl/fi/xu3kvqlqr8l9fpu2zsas1/images.jpeg?rlkey=np8hpz64rs3o8np3y56rphl22&st=1tn9qnsr&dl=1" alt="Gabonapehely" class="shop-product-img">
+                        <div class="shop-product-info">
+                            <span class="shop-product-name">Gabonapehely (Doboz)</span>
+                            <span class="shop-product-price">Egységár: 120 Ft</span>
+                        </div>
+                        <div class="shop-order-controls">
+                            <input type="number" id="order-qty-cereal" value="10" min="1" max="100" class="shop-qty-input">
+                        </div>
+                    </div>
+
+                    <button class="btn-action btn-save" onclick="placeOrder()" style="padding: 6px; font-size: 10px; margin-top: auto;">Megrendelés leadása</button>
                 </div>
             </div>
 
@@ -1214,6 +1294,7 @@
         let gameDay = 1;
         let gameTimerInterval = null;
         let isGamePaused = false;
+        let inventoryCereal = 0; // Raktáron lévő gabonapehely
 
         // Nyitvatartás adatok és a hét napjai (Csütörtökkel indul a 2026.01.01.)
         const dayNames = ["Csütörtök", "Péntek", "Szombat", "Vasárnap", "Hétfő", "Kedd", "Szerda"];
@@ -1360,7 +1441,7 @@
             }
         }
 
-        // --- SZÁMÍTÓGÉP ASZTAL ÉS NYITVATARTÁS APP ---
+        // --- SZÁMÍTÓGÉP ASZTAL ÉS WEBSHOP / NYITVATARTÁS APP ---
         function openPcDesktop(e) {
             if (isEditorMode) return; 
             document.getElementById('pc-desktop-view').classList.remove('hidden');
@@ -1370,14 +1451,36 @@
         function closePcDesktop() {
             document.getElementById('pc-desktop-view').classList.add('hidden');
             document.getElementById('opening-hours-window').classList.add('hidden');
+            document.getElementById('webshop-window').classList.add('hidden');
         }
 
         function openOpeningHoursApp() {
+            document.getElementById('webshop-window').classList.add('hidden');
             document.getElementById('opening-hours-window').classList.remove('hidden');
         }
 
         function closeOpeningHoursApp() {
             document.getElementById('opening-hours-window').classList.add('hidden');
+        }
+
+        function openWebshopApp() {
+            document.getElementById('opening-hours-window').classList.add('hidden');
+            document.getElementById('webshop-window').classList.remove('hidden');
+        }
+
+        function closeWebshopApp() {
+            document.getElementById('webshop-window').classList.add('hidden');
+        }
+
+        function placeOrder() {
+            let qty = parseInt(document.getElementById('order-qty-cereal').value) || 0;
+            if (qty <= 0) {
+                showToast('Add meg a rendelési mennyiséget!');
+                return;
+            }
+            inventoryCereal += qty;
+            showToast(`Sikeres rendelés: ${qty} db gabonapehely!`);
+            closeWebshopApp();
         }
 
         function renderOpeningHoursRows() {
@@ -1790,7 +1893,7 @@
                 'https://www.dropbox.com/scl/fi/sy0qochnz1xeugudglqer/parquetry-patterns-550x749-1.jpg?rlkey=f345v0cw0gdrsadef6103b6we&dl=1', 
                 'https://www.dropbox.com/scl/fi/2bt1ea9fnynk0m382ny5b/wooden-table-office-desk_64749-3209.jpg?rlkey=5jd82eokskyng6x50ug86ylgb&dl=1',
                 'https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop',
-                'https://www.dropbox.com/scl/fi/xu3kvqlqr8l9fpu2zsas1/images.jpeg?rlkey=np8hpz64rs3o8np3y56rphl22&st=1tn9qnsr&dl=1' // Új gabonapehely kép
+                'https://www.dropbox.com/scl/fi/xu3kvqlqr8l9fpu2zsas1/images.jpeg?rlkey=np8hpz64rs3o8np3y56rphl22&st=1tn9qnsr&dl=1' // Gabonapehely kép
             ];
 
             let loadedCount = 0;
