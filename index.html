@@ -207,7 +207,7 @@
         /* Fejléc a főmenüben logóval és szerkesztő gombbal */
         .header {
             position: relative;
-            z-index: 3;
+            z-index: 10;
             padding-top: 10px;
             padding-bottom: 2px;
             text-align: center;
@@ -216,22 +216,28 @@
             align-items: center;
             flex-shrink: 0;
             width: 100%;
+            pointer-events: none; /* Hogy a háttér ne zavarjon, de a gombok kapjanak kattintást */
+        }
+
+        .header > * {
+            pointer-events: auto;
         }
 
         .db-edit-btn-top {
             position: absolute;
             top: 10px;
             right: 12px;
-            background: rgba(22, 27, 34, 0.85);
+            background: rgba(22, 27, 34, 0.95);
             border: 1px solid #30363d;
             color: #00e699;
-            padding: 4px 8px;
+            padding: 5px 10px;
             font-size: 11px;
             font-weight: 700;
             border-radius: 6px;
             cursor: pointer;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.4);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.6);
             backdrop-filter: blur(5px);
+            z-index: 20;
         }
 
         .db-edit-btn-top:hover {
@@ -1154,9 +1160,9 @@
         <img src="https://www.dropbox.com/scl/fi/4ianmmd46w06ed6fzbesz/Supermarket.png?rlkey=5ih8i8dxtcnb19ja5jpss7grj&st=a53paco9&dl=1" alt="Main Menu BG" class="main-menu-bg" id="main-menu-bg-img">
         <div class="main-menu-overlay" id="main-menu-overlay"></div>
 
-        <!-- Fejléc (Logóval és Jobb Felső Szerkesztő Gombbal) -->
+        <!-- Fejléc (Logóval és Jobb Felső Adatbázis Gombbal) -->
         <div class="header" id="main-header">
-            <button class="db-edit-btn-top" onclick="openDatabaseEditor()">🛠️ Adatbázis</button>
+            <button id="db-btn-main" class="db-edit-btn-top">🛠️ Adatbázis</button>
             <img src="https://www.dropbox.com/scl/fi/1vbaxptj4ispe8bqzwr3v/file_000000002bac8210941574a47bc1c76f-1.png?rlkey=n8lnw6w3qkjlpy8gmfakj3e4d&st=1nl6gdkn&dl=1" alt="Supermarket Logo" class="main-logo-img">
             <div class="title" id="page-title">SUPERMARKET SIMULATOR 2D</div>
             <div class="subtitle" id="page-subtitle">FŐMENÜ</div>
@@ -1310,7 +1316,7 @@
         let currentActiveStore = "SUPERMARKET";
         let settingsOrigin = 'main'; 
 
-        // Időmechanika (0:00-tól indul, 1 valós mp = 1 perc játékidő)
+        // Időmechanika
         let gameMinutes = 0; 
         let gameYear = 2026;
         let gameMonth = 1;
@@ -1357,6 +1363,15 @@
 
             loadProductsFromStorage();
             renderOpeningHoursRows();
+
+            // Biztosítjuk az Adatbázis gomb eseménykezelőjét
+            const dbBtn = document.getElementById('db-btn-main');
+            if (dbBtn) {
+                dbBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    openDatabaseEditor();
+                });
+            }
 
             const loaderBar = document.getElementById('loader-bar');
             const loadingText = document.getElementById('loading-text');
